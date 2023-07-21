@@ -1,0 +1,84 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "firstName": "Mikael",
+      "lastName": "Åkerfeldt",
+      "email": "mikael.akerfeldt@example.com",
+      "position": "Developer",
+      "level": "Senior"
+    },
+    {
+      "id": 2,
+      "firstName": "Steven",
+      "lastName": "Wilson",
+      "email": "steven.wilson@example.com",
+      "position": "Designer",
+      "level": "Lead"
+    },
+    {
+      "id": 3,
+      "firstName": "John",
+      "lastName": "Petrucci",
+      "email": "john.petrucci@example.com",
+      "position": "QA",
+      "level": "Middle"
+    },
+    {
+      "id": 4,
+      "firstName": "Jordan",
+      "lastName": "Rudess",
+      "email": "jordan.rudess@example.com",
+      "position": "Manager",
+      "level": "Senior"
+    },
+    {
+      "id": 5,
+      "firstName": "James",
+      "lastName": "LaBrie",
+      "email": "james.labrie@example.com",
+      "position": "Developer",
+      "level": "Junior"
+    },
+    {
+      "id": 6,
+      "firstName": "Neal",
+      "lastName": "Morse",
+      "email": "neal.morse@example.com",
+      "position": "Designer",
+      "level": "Middle"
+    },
+    {
+      "id": 7,
+      "firstName": "Mike",
+      "lastName": "Portnoy",
+      "email": "mike.portnoy@example.com",
+      "position": "QA",
+      "level": "Senior"
+    },
+    {
+      "id": 8,
+      "firstName": "Geddy",
+      "lastName": "Lee",
+      "email": "geddy.lee@example.com",
+      "position": "Manager",
+      "level": "Lead"
+    },
+    {
+      "id": 9,
+      "firstName": "Alex",
+      "lastName": "Lifeson",
+      "email": "alex.lifeson@example.com",
+      "position": "Developer",
+      "level": "Middle"
+    },
+    {
+      "id": 10,
+      "firstName": "Serj",
+      "lastName": "Tankyan",
+      "email": "serj.tankyan@example.com",
+      "position": "Designer",
+      "level": "Senior"
+    }
+  ]
+}
