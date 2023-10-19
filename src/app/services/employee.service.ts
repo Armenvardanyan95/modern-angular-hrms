@@ -1,13 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Employee } from '../infrastructure/types/employee';
 
 @Injectable()
 export class EmployeeService {
-
-    constructor(
-        private http: HttpClient,
-    ) { }
+    private readonly http = inject(HttpClient);
 
     getEmployees() {
         return this.http.get<Employee[]>('/employees');
@@ -15,5 +12,9 @@ export class EmployeeService {
 
     getEmployee(id: number) {
         return this.http.get<Employee>(`/employees/${id}`);
+    }
+
+    createEmployee(employee: Omit<Employee, 'id' | 'isAvailable'>) {
+        return this.http.post('/employees', employee);
     }
 }

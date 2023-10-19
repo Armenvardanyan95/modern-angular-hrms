@@ -1,7 +1,8 @@
-import { AsyncPipe, NgComponentOutlet, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgComponentOutlet, NgFor, NgIf, NgOptimizedImage } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EmployeeService } from 'src/app/services/employee.service';
+import { EmployeeNotAvailableDirective } from 'src/app/shared/directives/employee-not-available.directive';
 import { TruncateDirective } from 'src/app/shared/directives/truncate.directive';
 
 @Component({
@@ -19,6 +20,7 @@ import { TruncateDirective } from 'src/app/shared/directives/truncate.directive'
       <tbody>
         <tr *ngFor="let employee of employees$ | async">
           <td>
+            <img [ngSrc]="employee.profilePicture" width="20" height="20"/>
             <a [routerLink]="['/employees/details', employee.id]">
               {{ employee.firstName }} {{ employee.lastName }}
             </a>
@@ -33,7 +35,7 @@ import { TruncateDirective } from 'src/app/shared/directives/truncate.directive'
     <ng-container *ngComponentOutlet="confirmDialog"></ng-container>
   `,
   standalone: true,
-  imports: [AsyncPipe, NgFor, NgIf, NgComponentOutlet, RouterLink, TruncateDirective],
+  imports: [AsyncPipe, NgFor, NgIf, NgComponentOutlet, RouterLink, TruncateDirective, EmployeeNotAvailableDirective, NgOptimizedImage],
 })
 export class EmployeeListComponent {
   employeeService = inject(EmployeeService);

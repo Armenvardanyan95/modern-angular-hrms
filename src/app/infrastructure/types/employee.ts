@@ -5,4 +5,6 @@ export type Employee = {
     email: string;
     position: 'Developer' | 'Designer' | 'QA' | 'Manager';
     level: 'Junior' | 'Middle' | 'Senior' | 'Lead';
+    isAvailable: boolean;
+    profilePicture: string;
 }
