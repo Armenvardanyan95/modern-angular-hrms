@@ -210,5 +210,22 @@
       "type": "Vacation",
       "status": "Approved"
     }
+  ],
+  "companies": [
+    {
+      "id": 1,
+      "name": "Oscorp",
+      "address": "200 Park Ave, New York, NY 10166, United States"
+    },
+    {
+      "id": 2,
+      "name": "Wayne Enterprises",
+      "address": "100 3rd Ave, Gotham, United States"
+    },
+    {
+      "id": 3,
+      "name": "Stark Industries",
+      "address": "201 Park Ave, New York, NY 10166, United States"
+    }
   ]
 }
