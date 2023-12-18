@@ -13,5 +13,5 @@ import { Component, Input } from '@angular/core';
   standalone: true,
 })
 export class ConfirmationDialogComponent {
-    isConfirmationOpen = true;
+    @Input() isConfirmationOpen = true;
 }

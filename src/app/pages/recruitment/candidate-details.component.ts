@@ -23,38 +23,42 @@ import { NgComponentOutlet } from '@angular/common';
         <p>Email: {{ candidate.email }}</p>
         <p>{{ candidate.position }}</p>
       </div>
-      <ng-container *ngComponentOutlet="actionsSection; inputs: {candidateId: candidate.id}"></ng-container>
+      @switch (candidate.status) {
+        @case ('CV evaluation') {
+          <app-cv-evaluation [candidateId]="candidate.id"/>
+        }
+        @case ('Interview preparation') {
+          <app-interview-preparation [candidateId]="candidate.id" />
+        }
+        @case ('Interview Feedback') {
+          <app-interview-feedback [candidateId]="candidate.id" />
+        }
+        @case ('Rejected') {
+          <app-rejection-letter [candidateId]="candidate.id" />
+        }
+        @case ('Approved') {
+          @if (candidate.offerAccepted) {
+            <app-onboarding-preparation [candidateId]="candidate.id" />
+          } @else {
+            <app-candidate-finalization [candidateId]="candidate.id" />
+          }
+        }
+        @default {
+          <span>Unknown candidate status</span>
+        }
+      }
     </div>
   `,
   standalone: true,
-  imports: [NgComponentOutlet],
+  imports: [
+    CvEvaluationComponent,
+    InterviewPreparationComponent,
+    InterviewFeedbackComponent,
+    RejectionLetterComponent,
+    OnboardingPreparationComponent,
+    CandidateFinalizationComponent,
+  ],
 })
-export class CandidateDetailsComponent implements OnChanges {
+export class CandidateDetailsComponent {
   @Input() candidate!: Candidate;
-  actionsSection: Type<any> | null = null;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['candidate']) {
-      this.actionsSection = this.selectActionsComponent();
-    }
-  }
-
-  private selectActionsComponent(): Type<any> {
-    switch (this.candidate.status) {
-      case 'CV evaluation':
-        return CvEvaluationComponent;
-      case 'Interview preparation':
-        return InterviewPreparationComponent;
-      case 'Interview Feedback':
-        return InterviewFeedbackComponent;
-      case 'Rejected':
-        return RejectionLetterComponent;
-      case 'Approved':
-        return this.candidate.offerAccepted
-          ? OnboardingPreparationComponent
-          : CandidateFinalizationComponent;
-      default:
-        throw new Error(`Unknown candidate status: ${this.candidate.status}`);
-    }
-  }
 }

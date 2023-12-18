@@ -15,22 +15,27 @@ import { NotificationService } from 'src/app/services/notification.service';
     <dialog [open]="notificationsOpen()">
       <h3>Notifications</h3>
       <ul>
-        <li *ngFor="let notification of notifications()">
-          <h4>{{ notification.title }}</h4>
-          <span>{{ notification.message }}</span>
-          <button
-            *ngIf="!notification.read"
-            (click)="markNotificationAsRead(notification)"
-          >
-            Mark as Read
-          </button>
-        </li>
+        @for (notification of notifications(); track notification.id) {
+          <li>
+            <h4>{{ notification.title }} {{$index + 1}}/{{$count}}</h4>
+            <span>{{ notification.message }}</span>
+            @if (!notification.read) {
+              <button (click)="markNotificationAsRead(notification)">
+                Mark as Read
+              </button>
+            } @else {
+              <span title="Notification is read">✔</span>
+            }
+          </li>
+        } @empty {
+          <li>No notifications to display</li>
+        }
       </ul>
       <button (click)="notificationsOpen.set(false)">Close</button>
     </dialog>
   `,
   standalone: true,
-  imports: [NgFor, NgIf],
+  imports: [NgFor],
 })
 export class HeaderComponent {
   private readonly notificationService = inject(NotificationService);

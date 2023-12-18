@@ -6,27 +6,35 @@ import { Project } from 'src/app/infrastructure/types/project';
 import { ProjectService } from 'src/app/services/project.service';
 
 @Component({
-    selector: 'app-project-card',
-    template: `
-        <div *ngIf="project$ | async as project" class="card">
-            <img [ngSrc]="project.image" width="100" height="100" loading="eager" sizes="100vw, 50vw"/>
+  selector: 'app-project-card',
+  template: `
+    @if (project$ | async; as project) {
+        <div class="card">
+            <img
+                [ngSrc]="project.image"
+                width="100"
+                height="100"
+                loading="eager"
+                sizes="100vw, 50vw"
+            />
             <div class="card-body">
                 <a [routerLink]="['/work/projects', project.id]">{{ project.name }}</a>
             </div>
         </div>
-    `,
-    imports: [NgIf, AsyncPipe, RouterLink, NgOptimizedImage],
-    standalone: true,
+    }
+  `,
+  imports: [AsyncPipe, RouterLink, NgOptimizedImage],
+  standalone: true,
 })
 export class ProjectCardComponent implements OnChanges {
-    private readonly projectService = inject(ProjectService);
+  private readonly projectService = inject(ProjectService);
 
-    @Input({required: true}) projectId!: number;
-    project$: Observable<Project> | null = null;
+  @Input({ required: true }) projectId!: number;
+  project$: Observable<Project> | null = null;
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes['projectId']) {
-            this.project$ = this.projectService.getProject(this.projectId);
-        }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['projectId']) {
+      this.project$ = this.projectService.getProject(this.projectId);
     }
+  }
 }

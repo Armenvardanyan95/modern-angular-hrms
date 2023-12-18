@@ -6,5 +6,5 @@ import { map, tap } from 'rxjs/operators';
     providedIn: 'root',
 })
 export class SocketService {
-    notifications$ = interval(2_500).pipe(map(() => []), tap(() => console.log('EMITTED')));
+    notifications$ = interval(2_500_000).pipe(map(() => []), tap(() => console.log('EMITTED')));
 }
