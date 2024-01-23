@@ -1,8 +1,6 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, inject, numberAttribute } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
-import { Project } from 'src/app/infrastructure/types/project';
+import { Component, input, inject, numberAttribute } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs/operators';
 import { ProjectService } from 'src/app/services/project.service';
 import { ProjectCardComponent } from 'src/app/shared/components/project-card.component';
 
@@ -11,7 +9,8 @@ import { ProjectCardComponent } from 'src/app/shared/components/project-card.com
   template: `
     <div class="project-details">
       <h3>Project Details</h3>
-      <div *ngIf="project$ | async as project">
+      @if (project(); as project) {
+      <div>
         <span>Project Name: {{ project.name }}</span>
         <span>Project Description: {{ project.description }}</span>
         <span>Logo: {{ project.image }}</span>
@@ -24,19 +23,18 @@ import { ProjectCardComponent } from 'src/app/shared/components/project-card.com
           </app-project-card>
         </div>
       </div>
+      }
     </div>
   `,
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe, ProjectCardComponent],
+  imports: [ProjectCardComponent],
 })
-export class ProjectDetailsComponent implements OnChanges {
-  @Input({transform: numberAttribute}) id!: number;
+export class ProjectDetailsComponent {
   private readonly projectService = inject(ProjectService);
-  project$: Observable<Project> | null = null;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id']) {
-      this.project$ = this.projectService.getProject(this.id);
-    }
-  }
+  id = input.required({ transform: numberAttribute });
+  project = toSignal(
+    toObservable(this.id).pipe(
+      switchMap(id => this.projectService.getProject(id))
+    )
+  );
 }
